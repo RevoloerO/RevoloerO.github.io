@@ -22,7 +22,7 @@ document.write("Browser: " + browser);
 document.write("<br>Platform: " + platform);
 document.write("<br>Language: " + lang);
 document.write("<br>Java: " + java);
-
+document.write("<br>Test: " + navigator.userAgent);
 //toggle info part
 const infos = document.querySelectorAll(".info");
 infos.forEach(function (info) {
