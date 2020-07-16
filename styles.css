@@ -89,8 +89,9 @@ h4 {
   font-size: 0.875rem;
 }
 p {
+
   margin-bottom: 1.25rem;
-  color: var(--clr-grey-5);
+  color: var(--clr-grey-7);
 }
 @media screen and (min-width: 800px) {
   h1 {
@@ -205,15 +206,35 @@ main {
   border: 0.25rem solid var(--clr-black);
   border-radius: var(--radius);
   padding: 1rem;
-
 }
 .container h2 {
   background: var(--clr-black);
   color: var(--clr-white);
   padding: 1rem;
   border-radius: var(--radius);
-  margin-bottom: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.container p {
+  text-align: center;
+  font-size: 2rem;
+  letter-spacing: var(--spacing);
+  text-transform: capitalize;
+  line-height: 1.25;
+  margin: 1rem 2rem;
+  font-family: var(--ff-primary);
+}
+.info button{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 .color {
   color: var(--clr-primary-5);
+}
+/* show text*/
+.info-text {
+  display: none;
+}
+.show-text .info-text {
+  display: block;
 }
