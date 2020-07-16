@@ -216,7 +216,7 @@ main {
 }
 .container p {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   letter-spacing: var(--spacing);
   text-transform: capitalize;
   line-height: 1.25;
