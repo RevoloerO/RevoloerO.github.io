@@ -1,4 +1,4 @@
-var ba = ["Vivaldi", "Trident", "Edg", "Chrome", "Firefox", "Safari", "Opera", "MSIE"];
+var ba = ["MessengerLiteForiOS","Android","Mobile","Vivaldi", "Trident", "Edg", "Chrome", "Firefox", "Safari", "Opera", "MSIE"];
 var browser,ua = navigator.userAgent;
 var platform = navigator.platform,lang = navigator.language;
 var java;
@@ -18,11 +18,13 @@ for(var i=0; i<ba.length;i++){
     break;
   }
 }
+
+
 document.write("Browser: " + browser);
 document.write("<br>Platform: " + platform);
 document.write("<br>Language: " + lang);
 document.write("<br>Java: " + java);
-document.write("<br>Test: " + navigator.userAgent);
+document.write("<br>Test: " + window.location.hostname);
 //toggle info part
 const infos = document.querySelectorAll(".info");
 infos.forEach(function (info) {
