@@ -1,0 +1,54 @@
+h1{
+  font: 50px Verdana , sans-serif;
+  margin: 15px auto;
+  text-align: center;
+}
+.grid{
+  height: 400px;
+  width: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color:#dcd6bc;
+   margin: 20px auto;
+   border: 10px solid #dcd6bc;
+}
+
+
+.grid div{
+  font: 25px;
+  text-align: center;
+}
+.valid {
+  height: 40px;
+  width: 40px;
+  border: 5px solid;
+  border-color: #f5f3eb #bab7a9 #bab7a9 #fff9db;
+  box-sizing: border-box;
+}
+.checked {
+  height: 40px;
+  width: 40px;
+  background-color: #cecab7;
+  border: 2px solid;
+  border-color: #9c998d;
+  box-sizing: border-box;
+
+}
+.bomb {
+  height: 40px;
+  width: 40px;
+  border: 5px solid;
+   border-color: #f5f3eb #bab7a9 #bab7a9 #fff9db;
+   /*background-color: red;*/
+   box-sizing: border-box;
+}
+
+.info-board {
+  margin: 5px auto;
+  border: 1px solid translucent;
+  text-align: center;
+}
+.flagAmount{
+  padding: 10px 0;
+  font: 20px  Verdana , sans-serif;
+}
