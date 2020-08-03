@@ -1,13 +1,12 @@
 
 .list{
   text-transform: center;
-  margin-top: 1rem;
-  padding: 2rem 5rem;
+  padding: 1rem 5rem;
 
 }
 .list h2{
   color: var(--clr-gold);
-  font-family: "Great Vibes", cursive;
+  font-family: Candara, cursive;
   text-align: center;
   margin: 2rem;
   text-shadow: 2px 2px var(--clr-black);
@@ -30,7 +29,7 @@
   margin-bottom: 0;
   letter-spacing: var(--spacing);
   color: var(--clr-gold);
-
+  font: 20px Helvetica,bold ;
 }
 .project-btn {
   font-size: 1.5rem;
@@ -40,7 +39,7 @@
   color: var(--clr-gold);
   transition: var(--transition);
 }
-.project-info a:visited {
+.project-btn a:visited,a:link {
    text-decoration: none;
    color: var(--clr-gold);
 }
