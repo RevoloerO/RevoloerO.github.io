@@ -6,7 +6,7 @@
 }
 .list h2{
   color: var(--clr-gold);
-  font-family: Candara, cursive;
+  font-family: Candara;
   text-align: center;
   margin: 2rem;
   text-shadow: 2px 2px var(--clr-black);
