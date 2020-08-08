@@ -161,7 +161,6 @@ p {
 /* NAV bar*/
 nav {
   background: var(--clr-black);
-  height: 3rem;
   display: grid;
   align-items: center;
   box-shadow: var(--dark-shadow);
@@ -189,12 +188,16 @@ nav a {
   font-family: Candara;
   color: var(--clr-gold);
   letter-spacing: var(--spacing);
-  margin-right: 1rem;
+  padding: 0.75rem 0.5rem;
 }
 nav a:hover {
   color: var(--clr-primary-5);
 }
-
+nav a.active{
+  background-color: var(--clr-gold);
+  color: var(--clr-black);
+  font-size: 1rem;
+}
 /*MAIN*/
 main {
 
@@ -233,6 +236,11 @@ main {
 .color {
   color: #f1f5f8;
 
+}
+/* drawing board*/
+.di-clock {
+    letter-spacing: 7px;
+    background: var(--clr-black);
 }
 /* show text*/
 .info-text {
