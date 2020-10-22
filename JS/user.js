@@ -2,6 +2,7 @@ var ba = ["MessengerLiteForiOS","Android","Mobile","Vivaldi", "Trident", "Edg", 
 var browser,ua = navigator.userAgent;
 var platform = navigator.platform,lang = navigator.language;
 var java;
+var hostname;
 if(navigator.javaEnabled()){
   java = "Enabled";
 }else{
@@ -18,13 +19,17 @@ for(var i=0; i<ba.length;i++){
     break;
   }
 }
-
+if(window.location.hostname === ""){
+  hostname = "invalid"
+}else{
+  hostname = window.location.hostname
+}
 
 document.write("Browser: " + browser);
 document.write("<br>Platform: " + platform);
 document.write("<br>Language: " + lang);
 document.write("<br>Java: " + java);
-document.write("<br>Test: " + window.location.hostname);
+document.write("<br>Test: " + hostname);
 //toggle info part
 const infos = document.querySelectorAll(".info");
 infos.forEach(function (info) {

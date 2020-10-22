@@ -6,23 +6,24 @@
 }
 .list h2{
   color: var(--clr-gold);
-  font-family: Candara;
+  font-family: Courier;
   text-align: center;
   margin: 2rem;
-  text-shadow: 2px 2px var(--clr-black);
+  text-shadow: 0.75px 0.75px 0  var(--clr-black), -0.75px -0.75px 0  var(--clr-black);
 }
 .list p{
   margin: 0 1rem;
   text-align: center;
 }
 .project-info {
-  background: var(--clr-black);
+  background: var(--clr-white);
   border-radius: var(--radius);
   box-shadow: var(--light-shadow);
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
   margin: 1rem;
+  border: 0.1rem solid var(--clr-gold);
 }
 .project-info p {
   padding: 0.5rem 0 0 0.5rem;
