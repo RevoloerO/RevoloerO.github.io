@@ -1,7 +1,8 @@
+@import url('vqm-porfolio.css');
 @import url('https://use.typekit.net/ist3wra.css');
 .message-wrap {
   background-color: transparent;
-  color: #f9f9f8;
+  color: var(--color-text);
   font-family: tahoma;
   font-size: 3rem;
   font-weight: 100;

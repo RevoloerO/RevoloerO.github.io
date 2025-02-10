@@ -1,0 +1,304 @@
+@import url('https://use.typekit.net/ist3wra.css');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Share+Tech+Mono&display=swap');
+@import url('welcome-animation.css');
+
+:root{
+  --metal-red-1: rgba(179,14,22,1);/*(179,14,22)  #B30E16*/
+  --metal-black-1:#131618;/*(19,22,24)*/
+  --metal-black-2:#0d0c0b; /*(13,12,11)*/
+  --metal-white-1:#FBFCF6;
+  --metal-white-2:#67635B;
+}
+body{
+  background-color: var(--metal-black-2);
+  color: #f9f9f8;
+  font-family: "megrim";
+
+}
+.banner{
+  background-color: var(--metal-black-1);
+  width:80%;
+  min-height: 800px;
+  height: fit-content;
+  margin: 10% auto;
+
+  border-style: solid;
+  border-width: 5px;
+  border-image:
+  linear-gradient(
+      to top left,
+      var(--metal-red-1) 0%,
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 0) 80%,
+      var(--metal-red-1) 100%
+    )1 ;
+  display: grid;
+  grid-template-columns: [line1] 10% [line2] 20% [line3] 20% [line4] 20% [line5] 20% [line6] 10% [end];
+  grid-template-rows: [row1] 20% [row2] 20% [row3] 20% [row4] 20% [row5]  20% [end];
+  position: relative;
+}
+.contact-bar{
+  width: auto;
+  text-align: right;
+  margin-top: 3px;
+  font-size: 30px;
+  color:   var(--metal-white-1);
+  filter: drop-shadow(2px 2px 2px var(--metal-white-2));
+  grid-column-start: 1;
+  grid-column-end: end;
+
+}
+.contact-bar a, .contact-bar a:visited{
+  text-decoration: none;
+  color: inherit;
+  padding: 0 1%;
+
+}
+.banner-welcome{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  font-size: 20px;
+}
+.banner-title{
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: end;
+  grid-row-end: 4;
+}
+.banner-detail{
+
+  grid-column-start: 4;
+  grid-column-end: end;
+  grid-row-start: 2;
+  grid-row-end: 5;
+  font-size: 20px;
+
+}
+
+.vqm-logo{
+  /*position*/
+  margin: 0 10% ;
+  width: fit-content;
+  /*fonts*/
+  font-family: "megrim", sans-serif;
+  font-weight: 1000;
+  font-style: normal;
+  text-transform: uppercase;
+  /*animation*/
+  background-image: linear-gradient(
+    -225deg,
+    #000000 25%,
+    #B30E16 50%,
+    #000000 75%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: var(--metal-white-1);
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 5s linear infinite;
+  font-size: 190px;
+
+}
+.vqm-logo a:visited, .vqm-logo a{
+  color:inherit;
+  text-decoration: none;
+}
+
+.title{
+  margin: auto 30px;
+
+}
+.title h1{
+  font-size: 3.5vw;
+
+  text-shadow: 1px 1px 2px #FFF9A6, 0 0 1em red, 0 0 0.2em red;
+  animation: neon 5s step-end infinite;
+}
+.title h3{
+  font-size: 1.5vw;
+  text-shadow:   .2px .2px .2px red, 0 0 .1em #FFF9A6;
+  line-height: 140%;
+
+}
+.introduction {
+
+  width: auto;
+  padding: 10px 3%;
+  margin-bottom: 10%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.introduction p{
+  text-align: justify;
+  font-family: 'Nanum Gothic Coding', monospace;
+  font-family: 'Share Tech Mono', monospace;
+  line-height: 180%;
+
+}
+.introduction a, .introduction a:visited{
+  text-decoration: none;
+  font-weight: bold;
+  color: inherit;
+  font-size: 20px;
+  margin: 3px auto;
+  padding: 5px;
+  border: 1px solid var(--metal-white-1);
+  border-radius: 5%;
+}
+.footer{
+  height: fit-content;
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+#footer-img{
+  height: 50px;
+  border-radius: 50%;
+  margin: auto;
+  border-left: 4px solid var(--metal-red-1);
+  border-right: 4px solid var(--metal-red-1);
+}
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes neon {
+  0%{
+    text-shadow: 1px 1px 2px beige, 0 0 1em 	crimson, 0 0 0.2em 	crimson;
+  }
+  33%{
+    text-shadow: 1px 1px 2px 	crimson, 0 0 1em beige, 0 0 0.2em beige;
+  }
+  66%{
+    text-shadow: 1px 1px 2px 	crimson, 0 0 1em cyan, 0 0 0.2em cyan;
+  }
+
+}
+@media (max-width: 1200px) {
+  .banner-welcome{
+    grid-column-start: 1;
+    grid-column-end: end;
+    grid-row-start: auto;
+  }
+  .banner-title{
+    grid-column-start: 1;
+    grid-column-end: end;
+    grid-row-start: auto;
+
+  }
+  .banner-detail{
+    grid-column-start: 1;
+    grid-column-end: end;
+    grid-row-start: auto;
+  }
+  .vqm-logo{
+    font-size: 160px;
+    margin: 0 auto;
+  }
+  .title{
+    margin: auto;
+    text-align: center;
+
+  }
+  .contact-bar{
+    font-size: 30px;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .contact-bar a, .contact-bar a:visited{
+    padding: 0 3%;
+  }
+}
+@media (max-width: 375px) {
+  .banner{
+    width:95%;
+    grid-template-columns: [line1] 50% [line2] 50%  [end];
+    grid-template-rows: [row1] 3% [row2] 20% [row3] 15% [row4] 20% [row5] 20% [row6] 25% [end];
+
+  }
+  .title h1{
+    font-size: 8.5vw;
+  }
+  .title h3{
+    font-size: 4vw;
+  }
+  .title h4{
+    font-size: 3vw;
+  }
+}
+@media(min-width: 376px) and  (max-width: 768px) {
+  .banner{
+    width:90%;
+  }
+  .title h1{
+    font-size: 8.5vw;
+  }
+  .title h3{
+    font-size: 4vw;
+  }
+  .title h4{
+    font-size: 2.5vw;
+  }
+}
+
+@media(min-width: 769px) and (max-width: 1200px) {
+
+  .title h1{
+    font-size: 7vw;
+  }
+  .title h3{
+    font-size: 3.5vw;
+  }
+  .title h4{
+    font-size: 2.5vw;
+  }
+  .footer{
+    bottom: -45px;
+  }
+  #footer-img{
+    height: 70px;
+  }
+}
+@media(min-width: 1201px) and (max-width: 1799px) {
+  .footer{
+    bottom: -45px;
+  }
+  #footer-img{
+    height: 70px;
+  }
+}
+@media(min-width: 1800px){
+  .banner{
+    min-height: 900px;
+  }
+  .banner-title{
+    grid-row-start: end;
+    grid-row-end: 5;
+  }
+  .title h1{
+    font-size: 3vw;
+  }
+  .title h3{
+    font-size: 1.5vw;
+  }
+  .title h4{
+    font-size: 1vw;
+  }
+  .footer{
+    bottom: -55px;
+  }
+  #footer-img{
+    height: 100px;
+  }
+}
