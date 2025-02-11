@@ -24,10 +24,12 @@ const WelcomeMessage = () => {
 const ContactBar = () => {
   return (
     <div className="contact-bar">
-      <a href="mailto: vuongquyenmai@gmail.com"><SiGmail /></a>
-      <a href="https://www.linkedin.com/in/vuong-quyen-mai/"><SiLinkedin /></a>
-      <a href="https://github.com/RevoloerO"><SiGithub /></a>
-      <ColorSwitcher /> {/* Use the new component */}
+      <ColorSwitcher /> 
+      <div className="contact-links">
+        <a href="mailto: vuongquyenmai@gmail.com"><SiGmail /></a>
+        <a href="https://www.linkedin.com/in/vuong-quyen-mai/"><SiLinkedin /></a>
+        <a href="https://github.com/RevoloerO"><SiGithub /></a>
+      </div>
     </div>
   );
 };
@@ -43,11 +45,11 @@ const Title = () => (
 
 const Introduction = () => (
   <div className="introduction">
-    <p> As a MERN full-stack web developer, I am driven by a passion for crafting innovative and efficient
-      web solutions that cater to the needs of both individuals and businesses. <br /> Armed with my proficiency
-      in MERN stack development, I possess the skills and expertise to create dynamic web applications that
-      are tailored to your unique requirements. My ultimate goal is to work collaboratively with you to
-      transform your ideas into reality and empower your enterprise to flourish in the digital realm. </p>
+    <p> With a strong background in MERN full-stack development, I have built dynamic 
+      and efficient web applications. Now, I am transitioning into blockchain development,
+       focusing on Ethereum, Solidity, and Web3.js. My goal is to bridge traditional web 
+       solutions with decentralized technologies, creating secure and transparent dApps 
+       that drive innovation in the digital space. </p>
     <a href="https://revoloero.github.io/vqm-porfolio-v3/">[[ Resume & Porfolio V3 ]]</a>
     <a href="https://revoloero.github.io/vqm-porfolio-v2/">[[ Resume & Porfolio V2 ]]</a>
     <a href="https://revoloero.github.io/vqm-countries-info/">[[ Country Info App ]]</a>

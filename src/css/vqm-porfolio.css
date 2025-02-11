@@ -23,6 +23,7 @@
     --color-accent 1s ease,
     --color-text 1s ease,
     --color-border 1s ease;
+  
 }
 
 body {
@@ -35,8 +36,8 @@ body {
 .banner {
   background-color: var(--color-primary);
   width: 80%;
-  min-height: 800px;
-  height: fit-content;
+  min-height: 700px;
+  height: min-content;
   margin: 10% auto;
   border-style: solid;
   border-width: 5px;
@@ -44,7 +45,7 @@ body {
     linear-gradient(to top left,
       var(--color-accent) 0%,
       rgba(0, 0, 0, 0) 20%,
-      rgba(0, 0, 0, 0) 80%,
+      rgba(0, 0, 0, 0) 65%,
       var(--color-accent) 100%) 1;
   display: grid;
   grid-template-columns: [line1] 10% [line2] 20% [line3] 20% [line4] 20% [line5] 20% [line6] 10% [end];
@@ -62,6 +63,12 @@ body {
   filter: drop-shadow(2px 2px 2px var(--color-border));
   grid-column-start: 1;
   grid-column-end: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .contact-bar a,
@@ -69,6 +76,13 @@ body {
   text-decoration: none;
   color: inherit;
   padding: 0 1%;
+}
+
+.contact-links {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .banner-welcome {
@@ -80,16 +94,29 @@ body {
 .banner-title {
   grid-column-start: 1;
   grid-column-end: 4;
-  grid-row-start: end;
-  grid-row-end: 4;
+  grid-row-start: 4;
+  grid-row-end: end;
+  height: fit-content;
 }
 
 .banner-detail {
+  margin: 0;
+  padding: 0;
   grid-column-start: 4;
   grid-column-end: end;
   grid-row-start: 2;
-  grid-row-end: 5;
+  grid-row-end: end;
   font-size: 20px;
+  border-style: solid;
+  border-width: 5px;
+  border-image:
+    linear-gradient(to top right,
+      var(--color-accent) 0%,
+      var(--color-primary) 40%,
+      var(--color-primary) 80%,
+      var(--color-accent) 100%) 1;
+  height: fit-content;
+  
 }
 
 .color-switcher {
@@ -283,17 +310,25 @@ body {
 
 @media (max-width: 599px) {
   .banner {
-    width: 95%;
+    width: 90%;
+    margin: 3%;
     grid-template-columns: [line1] 50% [line2] 50% [end];
     grid-template-rows: [row1] 5% [row2] 20% [row3] 15% [row4] 35% [row5] 25% [end];
   }
-
+  .banner-detail{
+    border-image:
+    linear-gradient(to top right,
+      var(--color-accent) 0%,
+      rgba(0, 0, 0, 0) 20%,
+      rgba(0, 0, 0, 0) 80%,
+      var(--color-accent) 100%) 1;
+  }
   .title h1 {
     font-size: 8.5vw;
   }
 
   .title h3 {
-    font-size: 4vw;
+    font-size: 3.5vw;
   }
 
   .title h4 {
@@ -306,6 +341,10 @@ body {
 
   .contact-bar {
     width: auto;
+  }
+  .vqm-logo{
+    height: fit-content;
+    font-size: 140px;
   }
 }
 
@@ -334,7 +373,9 @@ body {
 }
 
 @media(min-width: 769px) and (max-width: 1200px) {
-
+  .banner-welcome{
+    padding-top: 20px;
+  }
   .title h1 {
     font-size: 7vw;
   }
@@ -354,8 +395,9 @@ body {
 
 @media(min-width: 1201px) and (max-width: 1799px) {
   .banner {
-    margin: auto;
+    margin: 10vh auto;
     width: 85%;
+    height: 50vw;
   }
 
   .footer {
@@ -410,5 +452,25 @@ body {
 
   #footer-img {
     height: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  .contact-bar {
+    flex-direction: row;
+  }
+  .contact-links {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-bar {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact-links {
+    margin-top: 20px;
   }
 }
