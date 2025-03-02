@@ -193,7 +193,7 @@ body {
 .introduction {
   width: auto;
   padding: 10px 3%;
-  margin-bottom: 10%;
+  margin-bottom: 1em;
   color: var(--color-text);
   display: flex;
   flex-direction: column;
@@ -213,10 +213,13 @@ body {
   font-weight: bold;
   color: inherit;
   font-size: 20px;
+  text-shadow: 0.1px 0.1px 0.1px var(--color-accent), 0 0 0.1em var(--color-text);
+  
   margin: 3px auto;
-  padding: 5px;
+  padding: 5px 25px;
   border: 1px solid var(--color-text);
   border-radius: 5%;
+  background-color: var(--color-background);
 }
 
 .footer {
@@ -315,6 +318,7 @@ body {
     grid-template-columns: [line1] 50% [line2] 50% [end];
     grid-template-rows: [row1] 5% [row2] 20% [row3] 15% [row4] 35% [row5] 25% [end];
   }
+  
   .banner-detail{
     border-image:
     linear-gradient(to top right,
@@ -336,7 +340,7 @@ body {
   }
 
   .banner-detail {
-    padding-bottom: 10vh;
+    padding-bottom: 10px;
   }
 
   .contact-bar {
@@ -393,7 +397,7 @@ body {
   }
 }
 
-@media(min-width: 1201px) and (max-width: 1799px) {
+@media(min-width: 1201px)  {
   .banner {
     margin: 10vh auto;
     width: 85%;
@@ -410,10 +414,7 @@ body {
 }
 
 @media(min-width: 1800px) {
-  .banner {
-    min-height: 900px;
-    margin: 0 0;
-  }
+  
 
   .banner-title {
     grid-row-start: end;

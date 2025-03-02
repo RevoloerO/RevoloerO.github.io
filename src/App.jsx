@@ -4,6 +4,7 @@ import './css/vqm-porfolio.css';
 import logo from './css/VQM-logo.png';
 import { SiGmail, SiLinkedin, SiGithub } from "react-icons/si";
 import ColorSwitcher from './ColorSwitcher'; // Import the new component
+import resumePDF from './assets/Resume-VuongQuyenMai-Jan2025-green.pdf'; // Import the PDF file
 
 const VqmLogo = () => {
   return (
@@ -49,11 +50,12 @@ const Introduction = () => (
       and efficient web applications. Now, I am transitioning into blockchain development,
        focusing on Ethereum, Solidity, and Web3.js. My goal is to bridge traditional web 
        solutions with decentralized technologies, creating secure and transparent dApps 
-       that drive innovation in the digital space. </p>
+       that drive innovation in the digital space </p>
+    <a href={resumePDF} target="_blank" rel="noopener noreferrer">[[ Resume - January 2025 ]]</a>
     <a href="https://revoloero.github.io/vqm-porfolio-v3/">[[ Resume & Porfolio V3 ]]</a>
     <a href="https://revoloero.github.io/vqm-porfolio-v2/">[[ Resume & Porfolio V2 ]]</a>
     <a href="https://revoloero.github.io/vqm-countries-info/">[[ Country Info App ]]</a>
-  </div>
+    </div>
 );
 
 const Banner = () => {
