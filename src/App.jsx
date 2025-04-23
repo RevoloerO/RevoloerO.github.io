@@ -25,7 +25,7 @@ const WelcomeMessage = () => {
 const ContactBar = () => {
   return (
     <div className="contact-bar">
-      <ColorSwitcher /> 
+      <ColorSwitcher />
       <div className="contact-links">
         <a href="mailto: vuongquyenmai@gmail.com"><SiGmail /></a>
         <a href="https://www.linkedin.com/in/vuong-quyen-mai/"><SiLinkedin /></a>
@@ -46,16 +46,57 @@ const Title = () => (
 
 const Introduction = () => (
   <div className="introduction">
-    <p> With a strong background in MERN full-stack development, I have built dynamic 
+    <p> With a strong background in MERN full-stack development, I have built dynamic
       and efficient web applications. Now, I am transitioning into blockchain development,
-       focusing on Ethereum, Solidity, and Web3.js. My goal is to bridge traditional web 
-       solutions with decentralized technologies, creating secure and transparent dApps 
-       that drive innovation in the digital space </p>
-    <a href={resumePDF} target="_blank" rel="noopener noreferrer">[[ Resume - January 2025 ]]</a>
-    <a href="https://revoloero.github.io/vqm-porfolio-v3/">[[ Resume & Porfolio V3 ]]</a>
-    <a href="https://revoloero.github.io/vqm-porfolio-v2/">[[ Resume & Porfolio V2 ]]</a>
-    <a href="https://revoloero.github.io/vqm-countries-info/">[[ Country Info App ]]</a>
+      focusing on Ethereum, Solidity, and Web3.js. My goal is to bridge traditional web
+      solutions with decentralized technologies, creating secure and transparent dApps
+      that drive innovation in the digital space </p>
+    <div className="projects-showcase">
+
+      <div className="project-item">
+        <a href="https://revoloero.github.io/vqm-countries-info/">[[ Country Info App ]]</a>
+        <div className="project-description">Explore detailed information about countries worldwide.</div>
+      </div>
+      <div className="project-item">
+        <a href="https://revoloero.github.io/csu-ist621-waste-wise/">[[ Waste Wise App ]]</a>
+        <div className="project-description">
+          WasteWise is a web application designed to reduce food waste by connecting donors and recipients. 
+          It leverages geolocation, AI, and blockchain for efficient food redistribution and transparency.
+          <br />
+          <strong>Features:</strong>
+          <ul>
+            <li>AI-Powered Predictions</li>
+            <li>Blockchain Integration</li>
+            <li>Interactive Dashboard</li>
+            <li>Geolocation Matching</li>
+            <li>Regulation Guidelines</li>
+            <li>User Management</li>
+          </ul>
+          <strong>Tech Stack:</strong> 
+          React | React Router | Google Maps API | Blockchain (ethers.js) | CSS | Vite | 
+          @vis.gl/react-google-maps | Chart.js | PapaParse
+        </div>
+      </div>
+      <div className="project-item">
+        <a href="https://revoloero.github.io/vqm-mai-genealogy/en">[[ Genealogy App ]]</a>
+        <div className="project-description">
+          An interactive family tree application showcasing the genealogy of the Mai family.
+          It features:
+          <ul>
+            <li>Multi-language support (Vietnamese and English)</li>
+            <li>Responsive design for all devices</li>
+            <li>Smooth animations for an engaging user experience</li>
+          </ul>
+          <strong>Tech Stack:</strong> React.js | React Router | Vite | CSS | JSON | JavaScript
+
+        </div>
+      </div>
+      <div className="project-item">
+        <a href={resumePDF} target="_blank" rel="noopener noreferrer">[[ Resume - 2025 ]]</a>
+        <div className="project-description">View my latest resume showcasing my skills and experience.</div>
+      </div>
     </div>
+  </div>
 );
 
 const Banner = () => {
