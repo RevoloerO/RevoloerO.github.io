@@ -92,6 +92,14 @@ const Introduction = () => (
         </div>
       </div>
       <div className="project-item">
+        <a href="https://revoloero.github.io/vqm-TradeWarX/">[[ TradeWarX ]]</a>
+        <div className="project-description">
+          vqm-TradeWarX is a web-based simulation tool I developed to model the U.S.–China trade war 
+          through the lens of game theory. It allows users to explore strategic scenarios, visualize payoffs, 
+          and understand real-world international conflict using interactive matrices and economic modeling.
+        </div>
+      </div>
+      <div className="project-item">
         <a href={resumePDF} target="_blank" rel="noopener noreferrer">[[ Resume - 2025 ]]</a>
         <div className="project-description">View my latest resume showcasing my skills and experience.</div>
       </div>
