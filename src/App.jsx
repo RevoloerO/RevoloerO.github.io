@@ -78,7 +78,7 @@ const Introduction = () => (
         </div>
       </div>
       <div className="project-item">
-        <a href="https://revoloero.github.io/vqm-mai-genealogy/en">[[ Genealogy App ]]</a>
+        <a href="https://revoloero.github.io/vqm-mai-genealogy/">[[ Genealogy App ]]</a>
         <div className="project-description">
           An interactive family tree application showcasing the genealogy of the Mai family.
           It features:
