@@ -26,8 +26,11 @@
   
 }
 
+/* Animated gradient background using root color variables */
 body {
-  background-color: var(--color-background);
+  background: linear-gradient(-45deg, var(--color-accent), var(--color-secondary), var(--color-primary), var(--color-background));
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
   color: var(--color-text);
   font-family: "megrim";
   transition: background-color 1s ease, color 1s ease;
@@ -245,6 +248,13 @@ body {
   margin-bottom: 0.2rem;
 }
 
+
+.project-section a:hover,
+.project-section a:focus {
+   background: var(--color-text);
+  color: var(--color-background);
+}
+
 .project-item {
   position: relative;
   padding: 0;
@@ -376,6 +386,12 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
 }
 
 @media (max-width: 1200px) {
