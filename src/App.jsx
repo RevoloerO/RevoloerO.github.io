@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './App.css';
 import './css/vqm-porfolio.css';
 import logo from './css/VQM-logo.png';
+import avatar from './css/vqm-avatar.png';
 import { SiGmail, SiLinkedin, SiGithub } from "react-icons/si";
 import ColorSwitcher from './ColorSwitcher'; // Import the new component
 import resumePDF from './assets/Resume-VuongQuyenMai-Jan2025-green.pdf'; // Import the PDF file
@@ -125,6 +126,19 @@ const Introduction = () => (
 );
 
 const Banner = () => {
+  const [flipped, setFlipped] = useState(false);
+  const [animating, setAnimating] = useState(false);
+  const imgRef = useRef(null);
+
+  const handleFlip = () => {
+    if (animating) return;
+    setAnimating(true);
+    setTimeout(() => {
+      setFlipped(f => !f);
+      setTimeout(() => setAnimating(false), 300); // match animation duration
+    }, 150); // halfway through animation
+  };
+
   return (
     <div className="banner">
       <ContactBar />
@@ -139,7 +153,15 @@ const Banner = () => {
         <Introduction />
       </div>
       <div className="footer">
-        <img src={logo} alt="vqm-logo-img" id="footer-img" />
+        <img
+          src={flipped ? avatar : logo}
+          alt="vqm-logo-img"
+          id="footer-img"
+          ref={imgRef}
+          className={animating ? "coin-flip" : ""}
+          onClick={handleFlip}
+          style={{ cursor: 'pointer' }}
+        />
       </div>
     </div>
   );

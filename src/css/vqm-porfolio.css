@@ -313,6 +313,7 @@ body {
   margin: auto;
   border-left: 4px solid var(--color-accent);
   border-right: 4px solid var(--color-accent);
+  transition: transform 0.3s;
 }
 
 /* Section backgrounds and spacing */
@@ -609,5 +610,24 @@ body {
   }
   .contact-links {
     margin-top: 20px;
+  }
+}
+
+.coin-flip {
+  animation: coinFlipAnim 0.3s linear;
+}
+
+@keyframes coinFlipAnim {
+  0% {
+    transform: rotateY(0deg);
+  }
+  49% {
+    transform: rotateY(90deg);
+  }
+  51% {
+    transform: rotateY(90deg);
+  }
+  100% {
+    transform: rotateY(180deg);
   }
 }
