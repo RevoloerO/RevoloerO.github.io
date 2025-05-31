@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 const switchColorPalette = (palette) => {
     const root = document.documentElement;
@@ -44,22 +44,68 @@ const switchColorPalette = (palette) => {
         root.style.setProperty('--color-accent', '#634832');
         root.style.setProperty('--color-text', '#38220f');
         root.style.setProperty('--color-border', '#967259');
+    } else if (palette === 'random-chaos') {
+        // Generate random hex color
+        const randomHex = () => '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+        root.style.setProperty('--color-background', randomHex());
+        root.style.setProperty('--color-primary', randomHex());
+        root.style.setProperty('--color-secondary', randomHex());
+        root.style.setProperty('--color-accent', randomHex());
+        root.style.setProperty('--color-text', randomHex());
+        root.style.setProperty('--color-border', randomHex());
     }
 };
 
 const ColorSwitcher = () => {
+    const selectRef = useRef();
+    const [showChaosBtn, setShowChaosBtn] = useState(false);
+
+    const handleRandomChaos = () => {
+        if (selectRef.current && selectRef.current.value === 'random-chaos') {
+            switchColorPalette('random-chaos');
+        }
+    };
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setShowChaosBtn(value === 'random-chaos');
+        switchColorPalette(value);
+    };
+
     return (
         <div className="color-switcher">
             <label htmlFor="color-palette">Theme: </label>
-            <select onChange={(e) => switchColorPalette(e.target.value)}>
+            <select ref={selectRef} onChange={handleChange}>
                 <option value="default">Matcha</option> {/* Softer Matcha as default */}
                 <option value="blockchain-blue">Blockchain Blue</option>
                 <option value="divine-gold">Divine Gold</option>
                 <option value="vintage-green">Vintage Green</option>
                 <option value="metal-red">Metal Red</option> {/* Metal Red option */}
                 <option value="cream-coffee">Cream Coffee</option> {/* Cream Coffee option */}
-
+                <option value="random-chaos">Random Chaos</option>
             </select>
+            {showChaosBtn && (
+                <button
+                    type="button"
+                    style={{
+                        marginLeft: '4px',
+                        padding: '2px 6px',
+                        fontSize: '0.9em',
+                        lineHeight: 1,
+                        height: '22px',
+                        verticalAlign: 'middle',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                    onClick={handleRandomChaos}
+                    title="Generate new random chaos colors"
+                >
+                    <span style={{ fontSize: '1em', display: 'inline-block', lineHeight: 1 }}>
+                        &#x25A0;&#x25A1;
+                    </span>
+                </button>
+            )}
         </div>
     );
 };
