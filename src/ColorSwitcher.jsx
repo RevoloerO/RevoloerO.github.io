@@ -10,26 +10,29 @@ const switchColorPalette = (palette) => {
         root.style.setProperty('--color-text', '#604848');
         root.style.setProperty('--color-border', '#789048');
     } else if (palette === 'blockchain-blue') {
-        root.style.setProperty('--color-background', '#0A0F24');
-        root.style.setProperty('--color-primary', '#1A2A48');
-        root.style.setProperty('--color-secondary', '#2A3A68');
-        root.style.setProperty('--color-accent', '#00FFAB');
-        root.style.setProperty('--color-text', '#E0E0E0');
-        root.style.setProperty('--color-border', '#A0A0A0');
+        // Improved: more vibrant, modern blue palette
+        root.style.setProperty('--color-background', '#101C3A');   // deep blue background
+        root.style.setProperty('--color-primary', '#1E3A8A');      // strong blue primary
+        root.style.setProperty('--color-secondary', '#60A5FA');    // light blue secondary
+        root.style.setProperty('--color-accent', '#00FFD0');       // neon cyan accent
+        root.style.setProperty('--color-text', '#F3F6FA');         // near-white text
+        root.style.setProperty('--color-border', '#2563EB');       // vivid blue border
     } else if (palette === 'divine-gold') {
-        root.style.setProperty('--color-background', '#1C1C1C');
-        root.style.setProperty('--color-primary', '#2E2E2E');
-        root.style.setProperty('--color-secondary', '#5A4500');
-        root.style.setProperty('--color-accent', '#FFC107');
-        root.style.setProperty('--color-text', '#FFF8DC');
-        root.style.setProperty('--color-border', '#B8860B');
+        // Refined: softer, easy-on-eyes yet divine gold palette with highlighted border
+        root.style.setProperty('--color-background', '#F8F5EC');   // soft, warm ivory
+        root.style.setProperty('--color-primary', '#F6E27A');      // gentle gold
+        root.style.setProperty('--color-secondary', '#F9EBC7');    // light gold cream
+        root.style.setProperty('--color-accent', '#E7C873');       // muted golden accent
+        root.style.setProperty('--color-text', '#6B4F1D');         // deep gold-brown for contrast
+        root.style.setProperty('--color-border', '#FFD700');       // vivid gold highlight border
     } else if (palette === 'vintage-green') {
-        root.style.setProperty('--color-background', '#1B2B2B');
-        root.style.setProperty('--color-primary', '#2F4F4F');
-        root.style.setProperty('--color-secondary', '#556B2F');
-        root.style.setProperty('--color-accent', '#8FBC8F');
-        root.style.setProperty('--color-text', '#F5FFFA');
-        root.style.setProperty('--color-border', '#2E8B57');
+        // Improved: softer, elegant vintage green palette
+        root.style.setProperty('--color-background', '#F4F7F2');   // soft, light sage
+        root.style.setProperty('--color-primary', '#7A9D54');      // muted olive green
+        root.style.setProperty('--color-secondary', '#B5C99A');    // pale moss green
+        root.style.setProperty('--color-accent', '#557153');       // deep vintage green
+        root.style.setProperty('--color-text', '#2C3639');         // dark, easy-to-read
+        root.style.setProperty('--color-border', '#A3BC8B');       // subtle green border
     } else if (palette === 'metal-red') { // Metal Red palette
         root.style.setProperty('--color-background', '#0d0c0b');
         root.style.setProperty('--color-primary', '#131618');
