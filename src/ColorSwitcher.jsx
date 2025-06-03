@@ -57,39 +57,42 @@ const switchColorPalette = (palette) => {
         root.style.setProperty('--color-text', randomHex());
         root.style.setProperty('--color-border', randomHex());
     } else if (palette === 'harmony-randomness') {
-        // Harmony Randomness palette logic
-        // 1. Generate random HSL for primary
+        // Improved Harmony Randomness palette logic for better harmony
+        // 1. Generate random HSL for primary, but keep S and L in harmonious range
         const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
         const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
 
+        // Pick a random hue, but keep saturation and lightness in visually pleasing ranges
         const P = rand(0, 359); // Hue
-        const S = rand(40, 80); // Saturation %
-        const L = rand(30, 70); // Lightness %
+        const S = rand(55, 75); // Saturation: moderate for harmony
+        const L = rand(45, 65); // Lightness: not too dark or light
 
-        // --color-primary
+        // --color-primary: main color
         const colorPrimary = `hsl(${P}, ${S}%, ${L}%)`;
 
-        // --color-background: hsl(P, S * 0.2%, max(L * 1.2, 95%))
-        const bgS = Math.round(S * 0.2);
-        const bgL = Math.min(Math.round(L * 1.2), 95);
+        // --color-background: very light, low saturation version of primary
+        const bgS = clamp(Math.round(S * 0.18), 8, 18);
+        const bgL = clamp(Math.round(L * 1.35), 92, 98);
         const colorBackground = `hsl(${P}, ${bgS}%, ${bgL}%)`;
 
-        // --color-secondary: hsl((P + 30) % 360, S%, clamp(L ± 5%, 10%, 90%))
-        const secH = (P + 30) % 360;
-        const secL = clamp(L + (Math.random() > 0.5 ? 5 : -5), 10, 90);
-        const colorSecondary = `hsl(${secH}, ${S}%, ${secL}%)`;
+        // --color-secondary: analogous color, slightly lighter or darker
+        const secH = (P + 32) % 360;
+        const secS = clamp(S - 10, 40, 80);
+        const secL = clamp(L + rand(-8, 8), 38, 75);
+        const colorSecondary = `hsl(${secH}, ${secS}%, ${secL}%)`;
 
-        // --color-accent: hsl((P + 180) % 360, clamp(S + 20%, 100%), L)
+        // --color-accent: complementary color, more saturated and a bit lighter
         const accH = (P + 180) % 360;
-        const accS = clamp(S + 20, 0, 100);
-        const colorAccent = `hsl(${accH}, ${accS}%, ${L}%)`;
+        const accS = clamp(S + 18, 60, 95);
+        const accL = clamp(L + rand(-5, 10), 50, 80);
+        const colorAccent = `hsl(${accH}, ${accS}%, ${accL}%)`;
 
-        // --color-text: If L > 60: dark, else light
-        const colorText = L > 60 ? 'hsl(0, 0%, 10%)' : 'hsl(0, 0%, 95%)';
+        // --color-text: dark if background is light, light if background is dark
+        const colorText = bgL > 80 ? 'hsl(0, 0%, 12%)' : 'hsl(0, 0%, 98%)';
 
-        // --color-border: hsl(P, S * 0.3%, L * 0.8)
-        const borderS = Math.round(S * 0.3);
-        const borderL = Math.round(L * 0.8);
+        // --color-border: muted version of primary
+        const borderS = clamp(Math.round(S * 0.32), 10, 30);
+        const borderL = clamp(Math.round(L * 0.82), 30, 70);
         const colorBorder = `hsl(${P}, ${borderS}%, ${borderL}%)`;
 
         root.style.setProperty('--color-background', colorBackground);
