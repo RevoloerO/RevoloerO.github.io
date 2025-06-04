@@ -4,15 +4,16 @@
   background-color: transparent;
   color: var(--color-text);
   font-family: tahoma;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 100;
   line-height: 1.5;
   white-space: nowrap;
   overflow: hidden;
   position: relative;
-  width: 300px;
+  align-self: center;
+  width: fit-content;
   font-family: "megrim", sans-serif;
-  margin: 5px 20%;
+  margin: 2rem auto;
 }
 .message-wrap span::before {
   content: "Hello!";
@@ -65,5 +66,11 @@
   .message-wrap {
     margin: auto;
     text-align: center;
+  }
+}
+@media (max-width: 600px){
+  .message-wrap {
+    font-size: 2rem;
+    margin: 1rem auto;
   }
 }
