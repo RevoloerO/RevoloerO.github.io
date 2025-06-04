@@ -10,6 +10,7 @@ import avatar3 from './css/vqm-avatar-3.png';
 import { SiGmail, SiLinkedin, SiGithub } from "react-icons/si";
 import ColorSwitcher from './ColorSwitcher'; // Import the new component
 import resumePDF from './assets/Resume-VuongQuyenMai-Jan2025-green.pdf'; // Import the PDF file
+import Skillset from './Skillset'; // <-- Import Skillset
 
 const VqmLogo = () => {
   return (
@@ -177,6 +178,7 @@ const App = () => {
   return (
     <>
       <Banner />
+      <Skillset /> {/* <-- Add Skillset floating button/panel */}
     </>
   );
 };
