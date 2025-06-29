@@ -121,6 +121,21 @@ const Introduction = () => (
         </section>
         <section className="project-section">
           <div className="project-item">
+            <a href="https://revoloero.github.io/vqm-mini-games">[[ VQM Mini Games ]]</a>
+            <div className="project-description">
+              A modern browser-based collection of interactive mini-games for experimenting with game logic, physics, and UI. Features light/dark theming, milestone tracking, and a responsive design.
+              <br />
+              <strong>Mini-games:</strong>
+              <ul>
+                <li>Mouse Stalker: Grow a dragon that follows your mouse.</li>
+                <li>Blooming Garden: Slide and match flower tiles in an isometric garden.</li>
+              </ul>
+              <strong>Tech:</strong> React, Vite, React Router, CSS Modules, Lucide React
+            </div>
+          </div>
+        </section>
+        <section className="project-section">
+          <div className="project-item">
             <a href={resumePDF} target="_blank" rel="noopener noreferrer">[[ Resume - 2025 ]]</a>
             <div className="project-description">View my latest resume showcasing my skills and experience.</div>
           </div>
@@ -184,3 +199,9 @@ const App = () => {
 };
 
 export default App;
+// App.jsx
+// This is the main entry point of the application.
+// It imports necessary components and styles, and renders the main layout including the banner and skillset
+// The App component serves as the root component for the React application.
+
+
