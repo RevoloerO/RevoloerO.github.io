@@ -1,0 +1,26 @@
+.welcome-message-container {
+    position: relative;
+    height: 4rem; /* Adjust height based on font size */
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--secondary);
+}
+
+.welcome-message {
+    white-space: nowrap;
+}
+
+.welcome-cursor {
+    animation: blink 0.7s infinite;
+    margin-left: 0.25rem;
+    color: var(--primary);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}

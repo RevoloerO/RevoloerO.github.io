@@ -1,207 +1,185 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './App.css';
-import './css/vqm-porfolio.css';
-import logo1 from './css/VQM-logo-1.png';
-import logo2 from './css/VQM-logo-2.png';
-import logo3 from './css/vqm-logo-3.png';
-import avatar1 from './css/vqm-avatar-1.png';
-import avatar2 from './css/vqm-avatar-2.png';
-import avatar3 from './css/vqm-avatar-3.png';
 import { SiGmail, SiLinkedin, SiGithub } from "react-icons/si";
-import ColorSwitcher from './ColorSwitcher'; // Import the new component
-import resumePDF from './assets/Resume-VuongQuyenMai-Jan2025-green.pdf'; // Import the PDF file
-import Skillset from './Skillset'; // <-- Import Skillset
+import ColorSwitcher from './ColorSwitcher';
+import resumePDF from './assets/Resume-VuongQuyenMai-Jan2025-green.pdf';
+import Skillset from './Skillset';
 
-const VqmLogo = () => {
-  return (
-    <div className="vqm-logo">
-      <a href="https://revoloero.github.io">VQM</a>
+// --- Re-usable Project Card Component ---
+const ProjectCard = ({ project }) => (
+  <a href={project.link} target="_blank" rel="noopener noreferrer" className="project-card">
+    <div className="project-card-content">
+      <h3 className="project-card-title">{project.title}</h3>
+      <p className="project-card-description">{project.description}</p>
+      <div className="project-card-tags">
+        {project.tech.map(t => (
+          <span key={t} className="project-card-tag">{t}</span>
+        ))}
+      </div>
     </div>
-  );
-};
+  </a>
+);
 
+// --- Animated Welcome Message ---
 const WelcomeMessage = () => {
+  const greetings = ["Hello!", "Xin Chào!", "Bonjour!", "こんにちは!", "Hola!", "안영하세요!", "Salve!", "Namaste!", "Olá!", "你好!"];
+  const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
+  const [displayGreeting, setDisplayGreeting] = useState('');
+
+  useEffect(() => {
+    const greetingInterval = setInterval(() => {
+      setCurrentGreeting(g => {
+        const currentIndex = greetings.indexOf(g);
+        return greetings[(currentIndex + 1) % greetings.length];
+      });
+    }, 3000); // Change greeting every 3 seconds
+
+    return () => clearInterval(greetingInterval);
+  }, []);
+
+  useEffect(() => {
+    let charIndex = 0;
+    setDisplayGreeting(''); // Clear previous greeting
+    const typingInterval = setInterval(() => {
+      if (charIndex < currentGreeting.length) {
+        setDisplayGreeting(prev => prev + currentGreeting[charIndex]);
+        charIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 100); // Typing speed
+
+    return () => clearInterval(typingInterval);
+  }, [currentGreeting]);
+
+
   return (
-    <div className="message-wrap">
-      <span></span>
+    <div className="welcome-message-container">
+      <span className="welcome-message">{displayGreeting}</span>
+      <span className="welcome-cursor">_</span>
     </div>
   );
 };
 
-const ContactBar = () => {
-  return (
-    <div className="contact-bar">
+// --- Header Component ---
+const Header = ({ onSkillsetToggle }) => (
+  <header className="portfolio-header">
+    <div className="header-logo">
+      <span>VQM</span>
+    </div>
+    <div className="header-controls">
       <ColorSwitcher />
-      <div className="contact-links">
-        <a href="mailto: vuongquyenmai@gmail.com"><SiGmail /></a>
-        <a href="https://www.linkedin.com/in/vuong-quyen-mai/"><SiLinkedin /></a>
-        <a href="https://github.com/RevoloerO"><SiGithub /></a>
-      </div>
+      <button onClick={onSkillsetToggle} className="skillset-button-header">
+         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+        <span>Skillset</span>
+      </button>
     </div>
-  );
-};
-
-const Title = () => (
-  <div className="title">
-    <h1> &lt;Vuong Quyen Mai&gt;</h1>
-    <h3 id="type1"> &lt; Blockchain & Full-stack Web Developer &gt; </h3>
-    <h3 id="type2"> &lt; Master's degree in Information Systems &gt;</h3>
-    <h3 id="type3"> &lt; Bachelor's degree in Computer Science &gt;</h3>
-  </div>
+  </header>
 );
 
-const Introduction = () => (
-  <div className="introduction">
-    <section className="intro-section">
-      <p>
-        With a strong background in MERN full-stack development, I have built dynamic
-        and efficient web applications. Now, I am transitioning into blockchain development,
-        focusing on Ethereum, Solidity, and Web3.js. My goal is to bridge traditional web
-        solutions with decentralized technologies, creating secure and transparent dApps
-        that drive innovation in the digital space
-      </p>
-    </section>
-    <div className="section-divider"></div>
-    <div className="projects-showcase" style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <section className="project-section">
-          <div className="project-item">
-            <a href="https://revoloero.github.io/vqm-countries-info/">[[ Country Info App]]</a>
-            <div className="project-description">Explore detailed information about countries worldwide.</div>
-          </div>
-        </section>
-        <section className="project-section">
-          <div className="project-item">
-            <a href="https://revoloero.github.io/csu-ist621-waste-wise/">[[ Waste Wise App ]]</a>
-            <div className="project-description">
-              WasteWise is a web application designed to reduce food waste by connecting donors and recipients. 
-              It leverages geolocation, AI, and blockchain for efficient food redistribution and transparency.
-              <br />
-              <strong>Features:</strong>
-              <ul>
-                <li>AI-Powered Predictions</li>
-                <li>Blockchain Integration</li>
-                <li>Interactive Dashboard</li>
-                <li>Geolocation Matching</li>
-                <li>Regulation Guidelines</li>
-                <li>User Management</li>
-              </ul>
-              <strong>Tech Stack:</strong> 
-              React | React Router | Google Maps API | Blockchain (ethers.js) | CSS | Vite | 
-              @vis.gl/react-google-maps | Chart.js | PapaParse
-            </div>
-          </div>
-        </section>
-        <section className="project-section">
-          <div className="project-item">
-            <a href="https://revoloero.github.io/vqm-mai-genealogy/">[[ Genealogy App ]]</a>
-            <div className="project-description">
-              An interactive family tree application showcasing the genealogy of the Mai family.
-              It features:
-              <ul>
-                <li>Multi-language support (Vietnamese and English)</li>
-                <li>Responsive design for all devices</li>
-                <li>Smooth animations for an engaging user experience</li>
-              </ul>
-              <strong>Tech Stack:</strong> React.js | React Router | Vite | CSS | JSON | JavaScript
-            </div>
-          </div>
-        </section>
-      </div>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <section className="project-section">
-          <div className="project-item">
-            <a href="https://revoloero.github.io/vqm-TradeWarX/">[[ TradeWarX ]]</a>
-            <div className="project-description">
-              vqm-TradeWarX is a web-based simulation tool I developed to model the U.S.–China trade war 
-              through the lens of game theory. It allows users to explore strategic scenarios, visualize payoffs, 
-              and understand real-world international conflict using interactive matrices and economic modeling.
-            </div>
-          </div>
-        </section>
-        <section className="project-section">
-          <div className="project-item">
-            <a href="https://revoloero.github.io/vqm-mini-games">[[ VQM Mini Games ]]</a>
-            <div className="project-description">
-              A modern browser-based collection of interactive mini-games for experimenting with game logic, physics, and UI. Features light/dark theming, milestone tracking, and a responsive design.
-              <br />
-              <strong>Mini-games:</strong>
-              <ul>
-                <li>Mouse Stalker: Grow a dragon that follows your mouse.</li>
-                <li>Blooming Garden: Slide and match flower tiles in an isometric garden.</li>
-              </ul>
-              <strong>Tech:</strong> React, Vite, React Router, CSS Modules, Lucide React
-            </div>
-          </div>
-        </section>
-        <section className="project-section">
-          <div className="project-item">
-            <a href={resumePDF} target="_blank" rel="noopener noreferrer">[[ Resume - 2025 ]]</a>
-            <div className="project-description">View my latest resume showcasing my skills and experience.</div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-);
+// --- Digital Coin Footer ---
+const DigitalCoinFooter = () => {
+    const [isFlipping, setIsFlipping] = useState(false);
 
-const Banner = () => {
-  const [flipIndex, setFlipIndex] = useState(0); // 0: logo, 1: logo2, 2: avatar
-  const [animating, setAnimating] = useState(false);
-  const imgRef = useRef(null);
+    const handleFlip = () => {
+        if (isFlipping) return;
+        setIsFlipping(true);
+        setTimeout(() => setIsFlipping(false), 600);
+    };
 
-  const images = [logo1,avatar2, logo3, avatar1 ,logo2 ,avatar3];
-
-  const handleFlip = () => {
-    if (animating) return;
-    setAnimating(true);
-    setTimeout(() => {
-      setFlipIndex(idx => (idx + 1) % images.length);
-      setTimeout(() => setAnimating(false), 300); // match animation duration
-    }, 150); // halfway through animation
-  };
-
-  return (
-    <div className="banner">
-      <ContactBar />
-      <div className="banner-welcome">
-        <VqmLogo />
-        <WelcomeMessage />
-      </div>
-      <div className="banner-title">
-        <Title />
-      </div>
-      <div className="banner-detail">
-        <Introduction />
-      </div>
-      <div className="footer">
-        <img
-          src={images[flipIndex]}
-          alt="vqm-logo-img"
-          id="footer-img"
-          ref={imgRef}
-          className={animating ? "coin-flip" : ""}
-          onClick={handleFlip}
-          style={{ cursor: 'pointer' }}
-        />
-      </div>
-    </div>
-  );
+    return (
+        <footer className="portfolio-footer">
+            <div className="coin-container" onClick={handleFlip}>
+                <div className={`digital-coin ${isFlipping ? 'flipping' : ''}`}>
+                    <div className="coin-face coin-front">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    </div>
+                    <div className="coin-face coin-back">
+                        <span>VQM</span>
+                    </div>
+                </div>
+            </div>
+            <p>Coded by Vuong Quyen Mai © {new Date().getFullYear()}</p>
+        </footer>
+    );
 };
 
+
+// --- Main App Component ---
 const App = () => {
+  const [isSkillsetOpen, setSkillsetOpen] = useState(false);
+
+  const projects = [
+    { title: "Waste Wise App", description: "A web app to reduce food waste by connecting donors and recipients, using geolocation, AI, and blockchain for transparency.", link: "https://revoloero.github.io/csu-ist621-waste-wise/", tech: ["React", "Google Maps API", "Ethers.js", "Chart.js", "AI"] },
+    { title: "Genealogy App", description: "An interactive, multi-language family tree application for the Mai family, featuring a responsive design and smooth animations.", link: "https://revoloero.github.io/vqm-mai-genealogy/", tech: ["React", "React Router", "Vite", "CSS", "JSON"] },
+    { title: "TradeWarX", description: "A web-based simulation of the U.S.–China trade war using game theory, with interactive matrices and economic modeling.", link: "https://revoloero.github.io/vqm-TradeWarX/", tech: ["Game Theory", "Economic Modeling", "JavaScript"] },
+    { title: "VQM Mini Games", description: "A collection of interactive browser-based mini-games, experimenting with game logic, physics, and modern UI.", link: "https://revoloero.github.io/vqm-mini-games", tech: ["React", "Vite", "CSS Modules", "Lucide React"] },
+    { title: "Country Info App", description: "Explore detailed information about countries worldwide with a clean and simple interface.", link: "https://revoloero.github.io/vqm-countries-info/", tech: ["React", "API", "CSS"] },
+    { title: "Resume - 2025", description: "My latest resume, detailing my skills, experience, and professional journey in the tech industry.", link: resumePDF, tech: ["PDF", "Professional Experience"] }
+  ];
+  
+  const oldPortfolios = [
+      { name: "Portfolio v2", url: "https://revoloero.github.io/vqm-porfolio-v2" },
+      { name: "Portfolio v3", url: "https://revoloero.github.io/vqm-porfolio-v3" },
+      { name: "Portfolio v4", url: "https://revoloero.github.io/vqm-porfolio-v4" },
+      { name: "Portfolio v5", url: "https://revoloero.github.io/vqm-porfolio-v5" }
+  ];
+
   return (
-    <>
-      <Banner />
-      <Skillset /> {/* <-- Add Skillset floating button/panel */}
-    </>
+    <div className="portfolio-container">
+      <div className="background-overlay"></div>
+      <Header onSkillsetToggle={() => setSkillsetOpen(true)} />
+      
+      <main className="portfolio-main">
+        <section className="hero-section">
+          <WelcomeMessage />
+          <h1 className="hero-name">Vuong Quyen Mai</h1>
+          <p className="hero-title">Blockchain & Full-stack Web Developer</p>
+        </section>
+
+        <section className="about-contact-grid">
+            <div className="info-card about-card">
+                <h2 className="section-title">About Me</h2>
+                <p>With a strong background in MERN full-stack development, I build dynamic web applications. I am now transitioning into blockchain development, focusing on Ethereum, Solidity, and Web3.js to bridge traditional web solutions with decentralized technologies, creating secure and transparent dApps that drive innovation.</p>
+            </div>
+            <div className="info-card contact-card">
+                <h2 className="section-title">Contact</h2>
+                <a href="mailto:vuongquyenmai@gmail.com" className="contact-link">
+                    <SiGmail /> <span>vuongquyenmai@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/vuong-quyen-mai/" target="_blank" rel="noopener noreferrer" className="contact-link">
+                    <SiLinkedin /> <span>/in/vuong-quyen-mai</span>
+                </a>
+                <a href="https://github.com/RevoloerO" target="_blank" rel="noopener noreferrer" className="contact-link">
+                    <SiGithub /> <span>/RevoloerO</span>
+                </a>
+            </div>
+        </section>
+
+        <section className="projects-section">
+          <h2 className="section-title-center">Projects</h2>
+          <div className="projects-grid">
+            {projects.map(p => <ProjectCard key={p.title} project={p} />)}
+          </div>
+        </section>
+        
+        <section className="archive-section">
+          <h2 className="section-title-center">Portfolio Archive</h2>
+          <div className="archive-grid">
+            {oldPortfolios.map(p => (
+                <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" className="archive-link">
+                    {p.name}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <DigitalCoinFooter />
+      <Skillset isOpen={isSkillsetOpen} onClose={() => setSkillsetOpen(false)} />
+    </div>
   );
 };
 
 export default App;
-// App.jsx
-// This is the main entry point of the application.
-// It imports necessary components and styles, and renders the main layout including the banner and skillset
-// The App component serves as the root component for the React application.
-
-
