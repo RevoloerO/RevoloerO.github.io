@@ -62,13 +62,20 @@ const WelcomeMessage = () => {
 };
 
 // --- Header Component ---
-const Header = ({ onSkillsetToggle }) => (
+const Header = ({ onSkillsetToggle, isMuted, onMuteToggle }) => (
   <header className="portfolio-header">
     <div className="header-logo">
       <span>VQM</span>
     </div>
     <div className="header-controls">
       <ColorSwitcher />
+       <button onClick={onMuteToggle} className="control-button mute-button" title={isMuted ? "Unmute" : "Mute"}>
+        {isMuted ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        )}
+      </button>
       <button onClick={onSkillsetToggle} className="skillset-button-header">
          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
         <span>Skillset</span>
@@ -108,6 +115,93 @@ const DigitalCoinFooter = () => {
 // --- Main App Component ---
 const App = () => {
   const [isSkillsetOpen, setSkillsetOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const containerRef = useRef(null);
+  const toneSynths = useRef({});
+
+  const toggleMute = () => {
+      setIsMuted(prev => !prev);
+  };
+
+  // Effect for interactive background and sound
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Load Tone.js
+    const script = document.createElement('script');
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js";
+    script.async = true;
+    script.onload = () => {
+        // Initialize all synths after Tone.js is loaded
+        toneSynths.current = {
+            sonar: new window.Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 1 } }).toDestination(),
+            wind: new window.Tone.NoiseSynth({ noise: { type: 'pink' }, envelope: { attack: 0.2, decay: 0.3, sustain: 0 } }).toDestination(),
+            sparkle: new window.Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.2 }, volume: -15 }).toDestination(),
+            void: new window.Tone.MembraneSynth({ pitchDecay: 0.008, octaves: 2, oscillator: { type: 'sine' }, envelope: { attack: 0.001, decay: 0.5, sustain: 0.01, release: 0.4, attackCurve: 'exponential' } }).toDestination()
+        };
+    };
+    document.body.appendChild(script);
+
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e;
+      container.style.setProperty('--mouse-x', `${clientX}px`);
+      container.style.setProperty('--mouse-y', `${clientY}px`);
+    };
+
+    const handleClick = (e) => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (!currentTheme || !toneSynths.current || isMuted) return;
+
+        // Trigger sound and visual effects based on theme
+        if (currentTheme.includes('metal-red')) {
+            toneSynths.current.sonar?.triggerAttackRelease("C2", "8n");
+            const sonar = document.createElement('div');
+            sonar.className = 'sonar-ping';
+            sonar.style.left = `${e.clientX}px`;
+            sonar.style.top = `${e.clientY}px`;
+            document.body.appendChild(sonar);
+            sonar.addEventListener('animationend', () => sonar.remove());
+        } else if (currentTheme.includes('cyber-matcha')) {
+            toneSynths.current.wind?.triggerAttackRelease("2n");
+            for (let i = 0; i < 5; i++) {
+                const streak = document.createElement('div');
+                streak.className = 'wind-streak';
+                streak.style.left = `${e.clientX}px`;
+                streak.style.top = `${e.clientY}px`;
+                streak.style.setProperty('--random-angle', `${Math.random() * 360}deg`);
+                streak.style.setProperty('--random-delay', `${Math.random() * 0.2}s`);
+                document.body.appendChild(streak);
+                streak.addEventListener('animationend', () => streak.remove());
+            }
+        } else if (currentTheme.includes('divine-gold')) {
+            toneSynths.current.sparkle?.triggerAttackRelease("C6", "16n");
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = `${e.clientX}px`;
+                sparkle.style.top = `${e.clientY}px`;
+                sparkle.style.setProperty('--random-x', `${(Math.random() - 0.5) * 100}px`);
+                sparkle.style.setProperty('--random-y', `${(Math.random() - 0.5) * 100}px`);
+                sparkle.style.setProperty('--random-delay', `${Math.random() * 0.3}s`);
+                sparkle.style.setProperty('--random-duration', `${0.5 + Math.random() * 0.5}s`);
+                document.body.appendChild(sparkle);
+                sparkle.addEventListener('animationend', () => sparkle.remove());
+            }
+        } else if (currentTheme.includes('blockchain-blue')) {
+             toneSynths.current.void?.triggerAttackRelease("C1", "4n");
+        }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('click', handleClick);
+      document.body.removeChild(script);
+    };
+  }, [isMuted]);
 
   const projects = [
     { title: "Waste Wise App", description: "A web app to reduce food waste by connecting donors and recipients, using geolocation, AI, and blockchain for transparency.", link: "https://revoloero.github.io/csu-ist621-waste-wise/", tech: ["React", "Google Maps API", "Ethers.js", "Chart.js", "AI"] },
@@ -126,9 +220,13 @@ const App = () => {
   ];
 
   return (
-    <div className="portfolio-container">
+    <div className="portfolio-container" ref={containerRef}>
       <div className="background-overlay"></div>
-      <Header onSkillsetToggle={() => setSkillsetOpen(true)} />
+      <Header 
+        onSkillsetToggle={() => setSkillsetOpen(true)}
+        isMuted={isMuted}
+        onMuteToggle={toggleMute}
+      />
       
       <main className="portfolio-main">
         <section className="hero-section">
