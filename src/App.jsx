@@ -209,6 +209,12 @@ const App = () => {
     { title: "TradeWarX", description: "A web-based simulation of the U.S.–China trade war using game theory, with interactive matrices and economic modeling.", link: "https://revoloero.github.io/vqm-TradeWarX/", tech: ["Game Theory", "Economic Modeling", "JavaScript"] },
     { title: "VQM Mini Games", description: "A collection of interactive browser-based mini-games, experimenting with game logic, physics, and modern UI.", link: "https://revoloero.github.io/vqm-mini-games", tech: ["React", "Vite", "CSS Modules", "Lucide React"] },
     { title: "Country Info App", description: "Explore detailed information about countries worldwide with a clean and simple interface.", link: "https://revoloero.github.io/vqm-countries-info/", tech: ["React", "API", "CSS"] },
+    {
+      title: "LUMA: A JavaScript Learning Platform",
+      description: "LUMA is an interactive web platform for learning JavaScript. It features a structured curriculum from foundational to advanced topics, using unique visual aids like mind maps to simplify complex concepts.",
+      link: "https://revoloero.github.io/vqm-luma-javascript/",
+      tech: ["React", "React Router", "Custom CSS", "Font Awesome"]
+    },
     { title: "Resume - 2025", description: "My latest resume, detailing my skills, experience, and professional journey in the tech industry.", link: resumePDF, tech: ["PDF", "Professional Experience"] }
   ];
   
