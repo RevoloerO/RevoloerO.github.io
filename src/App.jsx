@@ -4,6 +4,7 @@ import { SiGmail, SiLinkedin, SiGithub } from "react-icons/si";
 import ColorSwitcher from './ColorSwitcher';
 import resumePDF from './assets/Resume-VuongQuyenMai-Jan2025-green.pdf';
 import Skillset from './Skillset';
+import ClickEffect from './ClickEffect';
 
 // --- Re-usable Project Card Component ---
 const ProjectCard = ({ project }) => (
@@ -23,35 +24,49 @@ const ProjectCard = ({ project }) => (
 // --- Animated Welcome Message ---
 const WelcomeMessage = () => {
   const greetings = ["Hello!", "Xin Chào!", "Bonjour!", "こんにちは!", "Hola!", "안영하세요!", "Salve!", "Namaste!", "Olá!", "你好!"];
-  const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
   const [displayGreeting, setDisplayGreeting] = useState('');
+  const typingIntervalRef = useRef(null);
+  const currentIndexRef = useRef(0);
 
   useEffect(() => {
-    const greetingInterval = setInterval(() => {
-      setCurrentGreeting(g => {
-        const currentIndex = greetings.indexOf(g);
-        return greetings[(currentIndex + 1) % greetings.length];
-      });
-    }, 3000); // Change greeting every 3 seconds
+    let greetingInterval;
 
-    return () => clearInterval(greetingInterval);
-  }, []);
+    const startTyping = (text) => {
+      let charIndex = 0;
+      setDisplayGreeting('');
 
-  useEffect(() => {
-    let charIndex = 0;
-    setDisplayGreeting(''); // Clear previous greeting
-    const typingInterval = setInterval(() => {
-      if (charIndex < currentGreeting.length) {
-        setDisplayGreeting(prev => prev + currentGreeting[charIndex]);
-        charIndex++;
-      } else {
-        clearInterval(typingInterval);
+      // Clear any existing typing interval
+      if (typingIntervalRef.current) {
+        clearInterval(typingIntervalRef.current);
       }
-    }, 100); // Typing speed
 
-    return () => clearInterval(typingInterval);
-  }, [currentGreeting]);
+      typingIntervalRef.current = setInterval(() => {
+        if (charIndex < text.length) {
+          setDisplayGreeting(prev => prev + text[charIndex]);
+          charIndex++;
+        } else {
+          clearInterval(typingIntervalRef.current);
+          typingIntervalRef.current = null;
+        }
+      }, 100);
+    };
 
+    // Start typing the first greeting
+    startTyping(greetings[0]);
+
+    // Set interval to change greetings
+    greetingInterval = setInterval(() => {
+      currentIndexRef.current = (currentIndexRef.current + 1) % greetings.length;
+      startTyping(greetings[currentIndexRef.current]);
+    }, 3000);
+
+    return () => {
+      clearInterval(greetingInterval);
+      if (typingIntervalRef.current) {
+        clearInterval(typingIntervalRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="welcome-message-container">
@@ -69,15 +84,24 @@ const Header = ({ onSkillsetToggle, isMuted, onMuteToggle }) => (
     </div>
     <div className="header-controls">
       <ColorSwitcher />
-       <button onClick={onMuteToggle} className="control-button mute-button" title={isMuted ? "Unmute" : "Mute"}>
+      <button
+        onClick={onMuteToggle}
+        className="control-button mute-button"
+        aria-label={isMuted ? "Unmute sound effects" : "Mute sound effects"}
+        aria-pressed={isMuted}
+      >
         {isMuted ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
         ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
         )}
       </button>
-      <button onClick={onSkillsetToggle} className="skillset-button-header">
-         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+      <button
+        onClick={onSkillsetToggle}
+        className="skillset-button-header"
+        aria-label="Open skillset panel"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
         <span>Skillset</span>
       </button>
     </div>
@@ -116,6 +140,7 @@ const DigitalCoinFooter = () => {
 const App = () => {
   const [isSkillsetOpen, setSkillsetOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [clickEffects, setClickEffects] = useState([]);
   const containerRef = useRef(null);
   const toneSynths = useRef({});
 
@@ -123,25 +148,105 @@ const App = () => {
       setIsMuted(prev => !prev);
   };
 
-  // Effect for interactive background and sound
+  // Effect for loading Tone.js with error handling
+  useEffect(() => {
+    let script = null;
+
+    const loadTone = async () => {
+      try {
+        if (window.Tone) {
+          initializeSynths();
+          return;
+        }
+
+        script = document.createElement('script');
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js";
+        script.async = true;
+
+        await new Promise((resolve, reject) => {
+          script.onload = resolve;
+          script.onerror = reject;
+          document.body.appendChild(script);
+        });
+
+        initializeSynths();
+      } catch (error) {
+        console.warn('Tone.js failed to load:', error);
+      }
+    };
+
+    const initializeSynths = () => {
+      toneSynths.current = {
+        // Metal Red: Deep metallic ping (sonar-like)
+        metalPing: new window.Tone.MetalSynth({
+          frequency: 200,
+          envelope: {
+            attack: 0.001,
+            decay: 0.4,
+            release: 0.8
+          },
+          harmonicity: 3.1,
+          modulationIndex: 16,
+          resonance: 4000,
+          octaves: 1.5,
+          volume: -18
+        }).toDestination(),
+
+        // Cyber Matcha: Soft organic swoosh
+        matcha: new window.Tone.NoiseSynth({
+          noise: { type: 'pink' },
+          envelope: {
+            attack: 0.05,
+            decay: 0.2,
+            sustain: 0
+          },
+          volume: -22
+        }).toDestination(),
+
+        // Divine Gold: Bright bell-like chime
+        divine: new window.Tone.Synth({
+          oscillator: { type: 'sine' },
+          envelope: {
+            attack: 0.005,
+            decay: 0.3,
+            sustain: 0.2,
+            release: 0.8
+          },
+          volume: -20
+        }).toDestination(),
+
+        // Blockchain Blue: Deep digital pulse
+        blockchain: new window.Tone.MembraneSynth({
+          pitchDecay: 0.05,
+          octaves: 4,
+          oscillator: { type: 'sine' },
+          envelope: {
+            attack: 0.001,
+            decay: 0.4,
+            sustain: 0.01,
+            release: 0.6,
+            attackCurve: 'exponential'
+          },
+          volume: -16
+        }).toDestination()
+      };
+    };
+
+    loadTone();
+
+    return () => {
+      if (script?.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+      // Dispose of synths
+      Object.values(toneSynths.current).forEach(synth => synth?.dispose());
+    };
+  }, []);
+
+  // Effect for interactive background and click handling
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
-    // Load Tone.js
-    const script = document.createElement('script');
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js";
-    script.async = true;
-    script.onload = () => {
-        // Initialize all synths after Tone.js is loaded
-        toneSynths.current = {
-            sonar: new window.Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 1 } }).toDestination(),
-            wind: new window.Tone.NoiseSynth({ noise: { type: 'pink' }, envelope: { attack: 0.2, decay: 0.3, sustain: 0 } }).toDestination(),
-            sparkle: new window.Tone.Synth({ oscillator: { type: 'sine' }, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.2 }, volume: -15 }).toDestination(),
-            void: new window.Tone.MembraneSynth({ pitchDecay: 0.008, octaves: 2, oscillator: { type: 'sine' }, envelope: { attack: 0.001, decay: 0.5, sustain: 0.01, release: 0.4, attackCurve: 'exponential' } }).toDestination()
-        };
-    };
-    document.body.appendChild(script);
 
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
@@ -150,47 +255,40 @@ const App = () => {
     };
 
     const handleClick = (e) => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (!currentTheme || !toneSynths.current || isMuted) return;
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (!currentTheme) return;
 
-        // Trigger sound and visual effects based on theme
+      const id = Date.now();
+
+      // Trigger sound effects based on theme (only if not muted)
+      if (!isMuted) {
         if (currentTheme.includes('metal-red')) {
-            toneSynths.current.sonar?.triggerAttackRelease("C2", "8n");
-            const sonar = document.createElement('div');
-            sonar.className = 'sonar-ping';
-            sonar.style.left = `${e.clientX}px`;
-            sonar.style.top = `${e.clientY}px`;
-            document.body.appendChild(sonar);
-            sonar.addEventListener('animationend', () => sonar.remove());
+          // Deep metallic ping
+          toneSynths.current.metalPing?.triggerAttackRelease("16n");
         } else if (currentTheme.includes('cyber-matcha')) {
-            toneSynths.current.wind?.triggerAttackRelease("2n");
-            for (let i = 0; i < 5; i++) {
-                const streak = document.createElement('div');
-                streak.className = 'wind-streak';
-                streak.style.left = `${e.clientX}px`;
-                streak.style.top = `${e.clientY}px`;
-                streak.style.setProperty('--random-angle', `${Math.random() * 360}deg`);
-                streak.style.setProperty('--random-delay', `${Math.random() * 0.2}s`);
-                document.body.appendChild(streak);
-                streak.addEventListener('animationend', () => streak.remove());
-            }
+          // Soft organic swoosh
+          toneSynths.current.matcha?.triggerAttackRelease("8n");
         } else if (currentTheme.includes('divine-gold')) {
-            toneSynths.current.sparkle?.triggerAttackRelease("C6", "16n");
-            for (let i = 0; i < 10; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = `${e.clientX}px`;
-                sparkle.style.top = `${e.clientY}px`;
-                sparkle.style.setProperty('--random-x', `${(Math.random() - 0.5) * 100}px`);
-                sparkle.style.setProperty('--random-y', `${(Math.random() - 0.5) * 100}px`);
-                sparkle.style.setProperty('--random-delay', `${Math.random() * 0.3}s`);
-                sparkle.style.setProperty('--random-duration', `${0.5 + Math.random() * 0.5}s`);
-                document.body.appendChild(sparkle);
-                sparkle.addEventListener('animationend', () => sparkle.remove());
-            }
+          // Bright bell-like chime (high C)
+          toneSynths.current.divine?.triggerAttackRelease("C5", "8n");
         } else if (currentTheme.includes('blockchain-blue')) {
-             toneSynths.current.void?.triggerAttackRelease("C1", "4n");
+          // Deep digital pulse (low C)
+          toneSynths.current.blockchain?.triggerAttackRelease("C2", "8n");
         }
+      }
+
+      // Add visual effect using React state (always show, regardless of mute)
+      setClickEffects(prev => [...prev, {
+        id,
+        x: e.clientX,
+        y: e.clientY,
+        type: currentTheme
+      }]);
+
+      // Remove effect after animation duration
+      setTimeout(() => {
+        setClickEffects(prev => prev.filter(effect => effect.id !== id));
+      }, 700);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -199,7 +297,6 @@ const App = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('click', handleClick);
-      document.body.removeChild(script);
     };
   }, [isMuted]);
 
@@ -228,7 +325,13 @@ const App = () => {
   return (
     <div className="portfolio-container" ref={containerRef}>
       <div className="background-overlay"></div>
-      <Header 
+
+      {/* Render click effects */}
+      {clickEffects.map(effect => (
+        <ClickEffect key={effect.id} {...effect} />
+      ))}
+
+      <Header
         onSkillsetToggle={() => setSkillsetOpen(true)}
         isMuted={isMuted}
         onMuteToggle={toggleMute}

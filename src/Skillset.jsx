@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./skillset.css";
 
 // --- SVG Icon Components ---
@@ -18,18 +18,65 @@ const skillsetData = [
 ];
 
 export default function Skillset({ isOpen, onClose }) {
+	const closeButtonRef = useRef(null);
+	const panelRef = useRef(null);
+
+	// Focus management: focus close button when panel opens
+	useEffect(() => {
+		if (isOpen && closeButtonRef.current) {
+			closeButtonRef.current.focus();
+		}
+	}, [isOpen]);
+
+	// Trap focus within the panel
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleKeyDown = (e) => {
+			if (e.key === 'Escape') {
+				onClose();
+			}
+
+			// Focus trap
+			if (e.key === 'Tab') {
+				const focusableElements = panelRef.current?.querySelectorAll(
+					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+				);
+				const firstElement = focusableElements?.[0];
+				const lastElement = focusableElements?.[focusableElements.length - 1];
+
+				if (e.shiftKey && document.activeElement === firstElement) {
+					e.preventDefault();
+					lastElement?.focus();
+				} else if (!e.shiftKey && document.activeElement === lastElement) {
+					e.preventDefault();
+					firstElement?.focus();
+				}
+			}
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		return () => document.removeEventListener('keydown', handleKeyDown);
+	}, [isOpen, onClose]);
+
 	if (!isOpen) return null;
 
 	return (
-		<div className="skillset-overlay" onClick={onClose}>
-			<div 
-                className="skillset-panel"
-                onClick={(e) => e.stopPropagation()}
-            >
+		<div className="skillset-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="skillset-title">
+			<div
+				ref={panelRef}
+				className="skillset-panel"
+				onClick={(e) => e.stopPropagation()}
+			>
 				<div className="skillset-panel-header">
-					<h2 className="skillset-panel-title">Skillset</h2>
-					<button onClick={onClose} className="skillset-panel-close">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+					<h2 id="skillset-title" className="skillset-panel-title">Skillset</h2>
+					<button
+						ref={closeButtonRef}
+						onClick={onClose}
+						className="skillset-panel-close"
+						aria-label="Close skillset panel"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 					</button>
 				</div>
                 <div className="skillset-panel-content">
